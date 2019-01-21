@@ -10,6 +10,7 @@ import ru.kogut.enterprise.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,11 @@ public class UserService {
         if (id.isEmpty() || id == null) return null;
         Optional<User> userOptional = userRepository.findById(id);
         return userOptional.get();
+    }
+
+    public User findByLogin(String userName){
+        if (userName == null || userName.isEmpty()) return null;
+        return userRepository.findByLogin(userName);
     }
 
     @Transactional
@@ -60,5 +66,10 @@ public class UserService {
         }
         user.setRoles(listRoles);
         userRepository.save(user);
+    }
+
+    @Transactional
+    public Iterable<User> findAllUsers(){
+        return userRepository.findAll();
     }
 }

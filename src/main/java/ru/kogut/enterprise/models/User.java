@@ -1,5 +1,7 @@
 package ru.kogut.enterprise.models;
 
+import ru.kogut.enterprise.enums.Roles;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,5 +81,12 @@ public class User extends AbstractEntity{
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public boolean isAdmin(){
+        for (int i = 0; i < roles.size(); i++) {
+            if (roles.get(i).getRoles() == Roles.ADMIN){return true;};
+        }
+        return false;
     }
 }

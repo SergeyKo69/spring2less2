@@ -1,12 +1,39 @@
 <!DOCTYPE html>
 <html
         xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Main page</title>
 </head>
 <body>
-    <h2>User logged: [[${userName}]]</h2>
+    <div th:replace="fragments/header :: header"></div>
+
+    <h2>User logged: [[${#httpServletRequest.remoteUser}]]</h2>
+
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+    <br>
+    <form th:action="@{/profile}" method="get">
+        <input type="submit" value="Profile"/>
+    </form>
+
+    <div th:if="${isAdmin}">
+        <table>
+            <tr th:border="2">
+                <th>login</th>
+                <th>User name</th>
+                <th>Active</th>
+            </tr>
+            <th:block th:each="user : ${users}">
+                <tr>
+                    <td th:text="${user.login}">...</td>
+                    <td th:text="${user.userName}">...</td>
+                    <td colspan="2" th:text="${user.active}">...</td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
 </body>
 </html>
