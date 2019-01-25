@@ -26,6 +26,7 @@ public class UserService {
     public User getUserById(String id) {
         if (id.isEmpty() || id == null) return null;
         Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.orElse(null) == null) return null;
         return userOptional.get();
     }
 

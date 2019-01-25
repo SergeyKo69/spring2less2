@@ -16,7 +16,9 @@ public class RoleService {
     }
 
     public Role getRoleById(String id) {
+        if (id.isEmpty() || id == null) return null;
         Optional<Role> roles = roleRepository.findById(id);
+        if (roles.orElse(null) == null) return null;
         return roles.get();
     }
 
